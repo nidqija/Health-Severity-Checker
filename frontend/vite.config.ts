@@ -7,6 +7,7 @@ export default defineConfig({
     proxy: {
       '/analyze': 'http://localhost:8080',
       '/clinics': 'http://localhost:8080',
+      '/generate-pdf': 'http://localhost:8080',
     },
   },
   test: {

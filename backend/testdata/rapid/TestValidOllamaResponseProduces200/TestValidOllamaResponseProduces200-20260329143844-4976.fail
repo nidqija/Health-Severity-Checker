@@ -1,0 +1,14 @@
+# 2026/03/29 14:38:44.137894 [TestValidOllamaResponseProduces200] [rapid] draw score: 1
+# 2026/03/29 14:38:44.137894 [TestValidOllamaResponseProduces200] [rapid] draw advice: " "
+# 2026/03/29 14:38:44.138434 [TestValidOllamaResponseProduces200] expected status 200, got 422 (body: {"error":"could not parse LLM response"}
+# )
+# 
+v0.4.8#13777631125855639732
+0x0
+0x0
+0x0
+0x0
+0x0
+0x0
+0x0
+0x0

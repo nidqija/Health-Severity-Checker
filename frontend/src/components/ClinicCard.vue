@@ -8,116 +8,108 @@ defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'approve'): void
-  (e: 'reject'): void
+  approve: []
+  reject: []
 }>()
 
 function navigate(placeId: string) {
   window.open(
     `https://www.google.com/maps/search/?api=1&query=Google&query_place_id=${placeId}`,
-    '_blank'
+    '_blank',
+    'noopener,noreferrer'
   )
+}
+
+function stars(rating: number): string {
+  const full = Math.round(rating)
+  return '★'.repeat(full) + '☆'.repeat(Math.max(0, 5 - full))
 }
 </script>
 
 <template>
-  <div class="clinic-card">
-    <div class="clinic-info">
-      <span class="clinic-name">{{ name }}</span>
-      <span class="clinic-status" :class="openNow ? 'open' : 'closed'">
-        {{ openNow ? 'Open now' : 'Closed' }}
-      </span>
-      <span class="clinic-address">{{ address }}</span>
-      <span class="clinic-rating">⭐ {{ rating > 0 ? rating.toFixed(1) : 'N/A' }}</span>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-info">
+        <p class="card-name">{{ name }}</p>
+        <p class="card-address">{{ address }}</p>
+        <div class="card-meta">
+          <span class="stars">{{ stars(rating) }}</span>
+          <span class="rating-num">{{ rating > 0 ? rating.toFixed(1) : 'N/A' }}</span>
+          <span class="open-badge" :class="openNow ? 'open' : 'closed'">
+            {{ openNow ? 'Open' : 'Closed' }}
+          </span>
+        </div>
+      </div>
     </div>
-    <div class="clinic-actions">
-      <button class="btn-navigate" @click="navigate(placeId)">🗺 Navigate</button>
-      <button class="btn-approve" @click="emit('approve')" aria-label="Approve">✔</button>
-      <button class="btn-reject" @click="emit('reject')" aria-label="Reject">✕</button>
+    <div class="card-actions">
+      <button class="btn approve" title="Approve" @click="emit('approve')">✓ Approve</button>
+      <button class="btn navigate" title="Navigate" @click="navigate(placeId)">🗺 Navigate</button>
+      <button class="btn reject" title="Reject" @click="emit('reject')">✕</button>
     </div>
   </div>
 </template>
 
 <style scoped>
-.clinic-card {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem;
+.card {
   background: #fff;
   border: 1px solid #e5e7eb;
   border-radius: 10px;
-}
-
-.clinic-info {
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-.clinic-name {
+.card-name {
   font-weight: 600;
   font-size: 0.95rem;
   color: #111827;
 }
 
-.clinic-address {
-  font-size: 0.85rem;
+.card-address {
+  font-size: 0.82rem;
   color: #6b7280;
+  margin-top: 0.15rem;
 }
 
-.clinic-rating {
-  font-size: 0.85rem;
-  color: #374151;
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
 }
 
-.clinic-status {
+.stars { color: #f59e0b; font-size: 0.85rem; letter-spacing: 1px; }
+.rating-num { font-size: 0.82rem; color: #374151; }
+
+.open-badge {
   font-size: 0.75rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
 }
-.clinic-status.open  { color: #16a34a; }
-.clinic-status.closed { color: #dc2626; }
+.open-badge.open   { background: #dcfce7; color: #15803d; }
+.open-badge.closed { background: #fee2e2; color: #b91c1c; }
 
-.clinic-actions {
+.card-actions {
   display: flex;
   gap: 0.5rem;
-  align-items: center;
-  flex-shrink: 0;
 }
 
-.btn-navigate {
-  padding: 0.4rem 0.75rem;
-  background: #4f46e5;
-  color: #fff;
+.btn {
+  padding: 0.45rem 0.875rem;
   border: none;
   border-radius: 6px;
+  font-family: inherit;
   font-size: 0.85rem;
+  font-weight: 500;
   cursor: pointer;
+  transition: opacity 0.15s;
 }
-.btn-navigate:hover { background: #4338ca; }
+.btn:hover { opacity: 0.85; }
 
-.btn-approve {
-  padding: 0.4rem 0.6rem;
-  background: #16a34a;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-.btn-approve:hover { background: #15803d; }
-
-.btn-reject {
-  padding: 0.4rem 0.6rem;
-  background: #dc2626;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-.btn-reject:hover { background: #b91c1c; }
+.btn.approve  { background: #4f46e5; color: #fff; }
+.btn.navigate { background: #0ea5e9; color: #fff; }
+.btn.reject   { background: #f3f4f6; color: #374151; margin-left: auto; }
 </style>

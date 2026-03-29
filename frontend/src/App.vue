@@ -5,8 +5,9 @@ import SeverityChecker from './views/SeverityChecker.vue'
 <template>
   <div class="app">
     <header class="header">
-      <h1>Severity Checker</h1>
-      <p>Describe your symptoms and get an AI-powered severity assessment.</p>
+      <div class="logo">🏥 MediQuick</div>
+      <h1>AI Triage System</h1>
+      <p>Describe your symptoms or upload an image for an instant severity assessment.</p>
     </header>
     <main class="main">
       <SeverityChecker />
@@ -31,6 +32,14 @@ import SeverityChecker from './views/SeverityChecker.vue'
   font-weight: 700;
   color: #1a1a2e;
   margin-bottom: 0.5rem;
+}
+
+.logo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #4f46e5;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.25rem;
 }
 
 .header p {
