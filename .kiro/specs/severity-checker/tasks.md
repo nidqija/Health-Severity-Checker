@@ -65,7 +65,7 @@ Implement a full-stack severity checker with a Vue.js SPA frontend and a Go HTTP
 - [x] 4. Checkpoint — Ensure all backend tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 5. Implement Vue.js frontend components
+- [x] 5. Implement Vue.js frontend components
   - [x] 5.1 Implement `TextInput` component
     - `<textarea>` with `modelValue` / `update:modelValue` props, `disabled` prop
     - Apply `min-height: 120px` style
@@ -87,7 +87,7 @@ Implement a full-stack severity checker with a Vue.js SPA frontend and a Go HTTP
     - Text area has min-height 120px
     - _Requirements: 1.1, 1.3, 5.3_
 
-- [ ] 6. Implement `SeverityChecker` view and API integration
+- [x] 6. Implement `SeverityChecker` view and API integration
   - [x] 6.1 Implement `SeverityChecker.vue`
     - Own reactive state: `inputText`, `loading`, `result`, `error`
     - On submit: validate non-empty, set `loading`, clear previous `result`/`error`, POST to `/analyze`, update state on response

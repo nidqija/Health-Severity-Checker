@@ -189,7 +189,7 @@ describe('SeverityChecker property tests', () => {
 
           const text = wrapper.text()
           const hasScore = text.includes(String(score))
-          const hasAdvice = text.includes(advice)
+          const hasAdvice = text.includes(advice.trim())
 
           wrapper.unmount()
           vi.unstubAllGlobals()
@@ -234,13 +234,9 @@ describe('SeverityChecker property tests', () => {
           await nextTick()
           await nextTick()
 
-          // Check that a non-empty error message is shown (via <span v-if="error">)
-          const errorSpan = wrapper.find('span[class]')
-          const allSpans = wrapper.findAll('span')
-          const errorText = allSpans
-            .map((s) => s.text())
-            .find((t) => t.length > 0 && t !== 'Loading...')
-          const hasError = typeof errorText === 'string' && errorText.length > 0
+          // Check that a non-empty error message is shown (via error-box div)
+          const errorDiv = wrapper.find('.error-box')
+          const hasError = errorDiv.exists() && errorDiv.text().length > 0
 
           // Check that no result is displayed (ResultDisplay component absent)
           const resultDisplay = wrapper.findComponent({ name: 'ResultDisplay' })

@@ -1,6 +1,7 @@
 <template>
   <textarea
     class="text-input"
+    style="min-height: 120px"
     :value="modelValue"
     :disabled="disabled"
     placeholder="e.g. I have a persistent headache and mild fever for 3 days…"

@@ -8,6 +8,7 @@ defineProps<{
   <button
     v-if="visible"
     class="book-btn"
+    style="min-width: 200px; min-height: 48px; background-color: red"
   >
     📅 Book Appointment
   </button>

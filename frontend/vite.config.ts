@@ -6,6 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/analyze': 'http://localhost:8080',
+      '/clinics': 'http://localhost:8080',
     },
   },
   test: {

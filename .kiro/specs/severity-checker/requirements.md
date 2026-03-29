@@ -14,6 +14,7 @@ A full-stack feature consisting of a Vue.js frontend and a Go backend. The user 
 - **Analyzer**: The Go component responsible for communicating with Ollama and parsing its response.
 - **Score**: An integer between 1 and 10 (inclusive) representing the severity level of the submitted text.
 
+
 ---
 
 ## Requirements
@@ -82,3 +83,18 @@ A full-stack feature consisting of a Vue.js frontend and a Go backend. The user 
 1. WHEN the returned Score is greater than or equal to 8, THE Frontend SHALL display a "Book Appointment" button styled with a red background color.
 2. WHEN the returned Score is less than 8, THE Frontend SHALL NOT render the "Book Appointment" button.
 3. WHEN the "Book Appointment" button is displayed, THE Frontend SHALL render it at a size that is visually prominent (minimum width 200px, minimum height 48px).
+
+### REQ-6: Geolocation and Clinic Discovery
+* **Trigger**: WHEN the returned `score` is $\ge 8$, THE Frontend **SHALL** request the user’s current geolocation via the browser’s `navigator.geolocation` API.
+* **Fallback**: IF the user denies location permissions, THE Frontend **SHALL** display a manual search field for "City or Postcode."
+* **Data Fetching**: WHEN coordinates are obtained, THE Frontend **SHALL** send a `GET` request to the Backend endpoint `/clinics?lat={lat}&lng={lng}`.
+* **Provider Integration**: THE Backend **SHALL** query the Google Places API for results within a 10km radius using keywords: `"clinic"`, `"hospital"`, `"klinik"`, `"medical center"`.
+* **Response Payload**: THE Backend **SHALL** return a JSON list of the top 3–5 closest clinics, including `name`, `address`, `rating`, `open_now` status, and `place_id`.
+
+### REQ-7: Clinic Selection and Interaction
+* **Component**: WHEN the `/clinics` data is returned, THE Frontend **SHALL** render a list of **Clinic Cards** below the "Book Appointment" button.
+* **Card Details**: EACH Clinic Card **SHALL** display the clinic name, a star rating, and a "Navigate" button.
+* **Action Logic**: EACH Clinic Card **SHALL** feature an "Approve" (Checkmark) and "Reject" (X) button.
+* **Approval**: WHEN "Approve" is clicked, THE Frontend **SHALL** store the selection in the application state and display a "Visit Confirmed" summary.
+* **Navigation**: WHEN "Navigate" is clicked, THE Frontend **SHALL** open a new browser tab with the URL: `https://www.google.com/maps/search/?api=1&query=Google&query_place_id={place_id}`.
+* **Rejection**: WHEN "Reject" is clicked, THE Frontend **SHALL** hide that specific card from the list.

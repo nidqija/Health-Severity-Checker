@@ -47,11 +47,17 @@ func SetOllamaURL(url string) { currentOllamaURL = url }
 // Analyze sends text to Ollama and returns a SeverityResponse.
 func Analyze(ctx context.Context, text string) (*SeverityResponse, error) {
 	prompt := fmt.Sprintf(
-		"Analyze the following text and respond ONLY with a JSON object in this exact format: {\"score\": <integer 1-10>, \"advice\": \"<string>\"}.\n"+
-			"The score must be an integer between 1 and 10 inclusive, where 1 is minimal severity and 10 is maximum severity.\n"+
-			"The advice must be a non-empty string with guidance.\n"+
-			"Do not include any other text, explanation, or formatting outside the JSON object.\n\n"+
-			"Text: %s", text,
+		"You are a medical triage assistant. Assess the severity of the following symptom description and respond ONLY with a JSON object.\n\n"+
+			"Scoring guide:\n"+
+			"- 1-2: No real symptoms, healthy, minor discomfort\n"+
+			"- 3-4: Mild symptoms, manageable at home\n"+
+			"- 5-6: Moderate symptoms, consider seeing a doctor soon\n"+
+			"- 7-8: Serious symptoms, see a doctor today\n"+
+			"- 9-10: Life-threatening emergency (e.g. chest pain, difficulty breathing, loss of consciousness, severe bleeding, suicidal ideation, dying)\n\n"+
+			"If the person says they are dying, in extreme pain, having a heart attack, can't breathe, or describes any life-threatening situation, the score MUST be 9 or 10.\n\n"+
+			"Respond ONLY with this exact JSON format, no other text:\n"+
+			"{\"score\": <integer 1-10>, \"advice\": \"<string>\"}\n\n"+
+			"Symptom description: %s", text,
 	)
 
 	reqBody := OllamaRequest{
