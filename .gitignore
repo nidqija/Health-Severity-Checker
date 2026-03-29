@@ -1,0 +1,14 @@
+# Node
+node_modules/
+
+# Go build artifacts
+backend/*.exe
+backend/severity-checker
+
+# Environment files
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
